@@ -1,1 +1,5 @@
 archivo creado por javier
+<<<<<<< HEAD
+=======
+que alguien le haga cambios a este archivo 
+>>>>>>> develop

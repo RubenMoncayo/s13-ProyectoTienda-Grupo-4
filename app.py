@@ -66,11 +66,13 @@ def crud_product():
         brand = request_data["brand"]
         presentation = request_data["presentation"]
         category = request_data["category"]
+        price = request_data["price"]
 
         print("Nombre:" + name)
         print("Marca:" + brand)
         print("Presentación:" + presentation)
         print("Categoria:" + category)
+        print("Precio:" + price)
 
         # Insertar en la base de datos el producto
 

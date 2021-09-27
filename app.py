@@ -1,4 +1,5 @@
-from flask import Flask, request
+from re import U
+from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
@@ -15,7 +16,7 @@ db = SQLAlchemy(app)
 
 # Importar los modelos
 
-from models import Product
+from models import Product, User
 
 # Crear esquema de la base de datos
 
@@ -28,9 +29,31 @@ db.session.commit()
 def get_home():
     return "Este es el home"
 
-@app.route("/signup")
-def sign_up():
-    return "Este es la página de registro"
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
+@app.route("/create_user", methods=["POST"])
+def create_user():
+    email = request.form["email"]
+    password = request.form["password"] 
+
+    #user = User(email, password)
+    #db.session.add(user)
+    #db.session.commit()   
+
+    return "Registro exitoso"
+
+    
+
+
+    # Insertar en DB
+    # Buscar código en la DB
+    # Si no existe el código, crearlo en la DB
+    # Si existe el código, redireccionar a la página de register
+   
+
+
 
 # Rutas de otras acciones
 @app.route("/product", methods=["GET", "POST"])

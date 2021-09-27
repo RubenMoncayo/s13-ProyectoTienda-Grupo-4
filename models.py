@@ -1,6 +1,7 @@
 from app import db
 
 # Tabla Producto
+
 class Product(db.Model):
     __tablename__ = 'Product'
 
@@ -17,6 +18,7 @@ class Product(db.Model):
     location = db.Column(db.String)
 
     # insertar constructor tabla producto
+
     def __init__(self,name,brand,presentation,category,price,amount,due_date,income_type,supplier,location):
         self.name = name
         self.brand = brand
@@ -39,6 +41,12 @@ class Administrator(db.Model):
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
 
+    # Insertar constructor tabla Administrador
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
 # Tabla Factura de Venta
 
 class Invoice(db.Model):
@@ -49,3 +57,23 @@ class Invoice(db.Model):
     amount = db.Column(db.Integer)
     unit_value = db.Column(db.Integer)
     total_value = db.Column(db.Integer)
+
+# Tabla Usuarios
+
+class User(db.Model):
+    __tablename__ = 'User'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    email = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
+
+    # Insertar constructor tabla usuarios
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+        
+
+       
+

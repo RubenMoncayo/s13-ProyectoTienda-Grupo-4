@@ -38,9 +38,9 @@ def create_user():
     email = request.form["email"]
     password = request.form["password"] 
 
-    #user = User(email, password)
-    #db.session.add(user)
-    #db.session.commit()   
+    user = User(email, password)
+    db.session.add(user)
+    db.session.commit()   
 
     return "Registro exitoso"
 
@@ -126,3 +126,8 @@ def delete_product():
     db.session.delete(product)
     db.session.commit()
     return "Se borro el producto"
+
+
+    if __name__ == "__main__":
+    app.run()
+

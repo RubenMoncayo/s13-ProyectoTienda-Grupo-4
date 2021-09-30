@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 # Importar los modelos
 
-from models import Product, User
+from models import Product, User, Invoice, Administrator
 
 # Crear esquema de la base de datos
 

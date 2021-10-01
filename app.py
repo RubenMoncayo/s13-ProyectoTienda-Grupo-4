@@ -1,5 +1,5 @@
 from re import U
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import datetime
 
@@ -43,17 +43,13 @@ def create_user():
     db.session.add(user)
     db.session.commit()   
 
-    return "Registro exitoso"
-
-    
+    return redirect(url_for("product"))   
 
 
     # Insertar en DB
     # Buscar código en la DB
     # Si no existe el código, crearlo en la DB
     # Si existe el código, redireccionar a la página de register
-   
-
 
 
 # Rutas de otras acciones

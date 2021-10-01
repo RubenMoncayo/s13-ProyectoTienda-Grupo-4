@@ -50,7 +50,7 @@ class Administrator(db.Model):
 
 # Tabla Cajero
 
-class cashier(db.Model):
+class Cashier(db.Model):
     __tablename__ = 'Cashier'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -86,7 +86,7 @@ class Invoice(db.Model):
 
 # Tabla Comprobante de Egreso
 
-class Invoice(db.Model):
+class Egress_invoice(db.Model):
     __tablename__ = 'Egress_invoice'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -118,7 +118,7 @@ class User(db.Model):
 
 # Tabla Inventario
 
-class inventory(db.Model):
+class Inventory(db.Model):
     __tablename__ = 'Inventory'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -136,6 +136,8 @@ class inventory(db.Model):
         self.output_date = output_date
 
 # Tabla Ingresos
+
+class Incomes(db.Model):
     __tablename__ = 'Incomes'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -155,6 +157,8 @@ class inventory(db.Model):
         self.invoice_id = invoice_id
 
 # Tabla Egresos
+
+class Egress(db.Model):
     __tablename__ = 'Egress'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -174,6 +178,7 @@ class inventory(db.Model):
 
 # Tabla Reportes
 
+class Reports(db.Model):
     __tablename__ = 'Reports'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

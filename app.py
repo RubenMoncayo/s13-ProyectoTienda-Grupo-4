@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 # 'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost:5432/tienda'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oqeyqjxvtgabsw:b725feeade390b604b07cc18aa8aee5156bd63e64a25b9d2f14f4ae82f30fd13@ec2-54-161-189-150.compute-1.amazonaws.com:5432/dfacl5b6rvkdn5'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost:5432/tienda'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oqeyqjxvtgabsw:b725feeade390b604b07cc18aa8aee5156bd63e64a25b9d2f14f4ae82f30fd13@ec2-54-161-189-150.compute-1.amazonaws.com:5432/dfacl5b6rvkdn5'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 
@@ -30,12 +30,15 @@ db.session.commit()
 def get_home():
     return "Este es el home"
 
+# Ruta para crear el usuario
+
 @app.route("/register")
 def register():
     return render_template("register.html")
 
 @app.route("/create_user", methods=["POST"])
 def create_user():
+    name = request.form["name"]
     email = request.form["email"]
     password = request.form["password"] 
 
@@ -43,7 +46,27 @@ def create_user():
     db.session.add(user)
     db.session.commit()   
 
-    return redirect(url_for("product"))   
+    return redirect(url_for("login")) 
+
+# Ruta de logueo de usuario
+
+@app.route('/login')
+def login():
+  return render_template("login.html")
+
+
+@app.route('/check_user', methods=['POST'])
+def check_user():
+    email = request.form["email"]
+    password = request.form["password"]
+    users = User.query.filter(User.password==password,User.email==email)
+
+    try:
+        if(users[0] is not None):
+            return render_template("register.html")
+
+    except:
+        return redirect(url_for("product"))       
 
 
     # Insertar en DB
@@ -53,14 +76,17 @@ def create_user():
 
 
 # Rutas de otras acciones
+
 @app.route("/product", methods=["GET", "POST"])
 def crud_product():
     if request.method == "GET":
 
-        # Pedir un producto
+    # Pedir un producto
+    
         print("Llegó un GET")
 
-        # Insertar producto
+    # Insertar producto
+
         name = "Jabon de cuerpo"
         brand = "Palmolive"
         presentation = "barra"
@@ -80,7 +106,8 @@ def crud_product():
 
     elif request.method == "POST":
 
-        # Registrar un producto
+    # Registrar un producto
+
         request_data = request.form
         name = request_data["name"]
         brand = request_data["brand"]
@@ -94,11 +121,12 @@ def crud_product():
         print("Categoria:" + category)
         print("Precio:" + price)
 
-        # Insertar en la base de datos el producto
+    # Insertar en la base de datos el producto
 
         return "Se registró el producto exitosamente"
 
 # Actualizar productos
+
 @app.route('/updateproduct')
 def update_product():
     old_name = "Jabon de cuerpo"
@@ -109,6 +137,7 @@ def update_product():
     return "Actualización exitosa"
 
 # Consultar productos
+
 @app.route('/getproduct')
 def get_product():
     songs = Product.query.all()
@@ -116,13 +145,14 @@ def get_product():
     return "Se trajo la lista de productos"
 
 # Eliminar productos
+
 @app.route('/deleteproduct')
 def delete_product():
     product_name = "Jabon de cuerpo"
     product = Product.query.filter_by(name=product_name).first()
     db.session.delete(product)
     db.session.commit()
-    return "Se borro el producto"
+    return "Se eliminó el producto"
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register</title>
+  <title>Login</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -44,7 +44,7 @@
           font-family: "Roboto", sans-serif;
           text-transform: uppercase;
           outline: 0;
-          background: #439738;
+          background: #174888;
           width: 100%;
           border: 0;
           padding: 15px;
@@ -55,7 +55,7 @@
           cursor: pointer;
         }
         .form button:hover,.form button:active,.form button:focus {
-          background: #66db43;
+          background: #4467c8;
         }
         .form .message {
           margin: 25px 0 0;
@@ -104,10 +104,10 @@
         }
         body {
           background: hsl(278, 78%, 25%); /* fallback for old browsers */
-          background: -webkit-linear-gradient(right, hsl(270, 12%, 97%), #27b63a);
-          background: -moz-linear-gradient(right, hsl(270, 12%, 97%),#27b63a );
-          background: -o-linear-gradient(right, hsl(270, 12%, 97%), #27b63a);
-          background: linear-gradient(to left, hsl(270, 12%, 97%), #27b63a);
+          background: -webkit-linear-gradient(right, hsl(270, 12%, 97%), #2b055c);
+          background: -moz-linear-gradient(right, hsl(270, 12%, 97%), #2b055c);
+          background: -o-linear-gradient(right, hsl(270, 12%, 97%), #2b055c);
+          background: linear-gradient(to left, hsl(270, 12%, 97%), #2b055c);
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;      
         }
@@ -128,21 +128,19 @@
 </head>
  <body>
     <div class="alert alert-success">
-      <strong> Bienvenido a LA TIENDA VIRTUAL </strong> Crea tu cuenta
+      <strong> Bienvenido a LA TIENDA VIRTUAL </strong> Ingresa al sistema
     </div>
     <div class="login-page">
       <div class="form">
-        <form class="login-form" action="{{url_for('create_user')}}" method="post">
-          <div>
-          <input type="name" name="name" required placeholder="name"/>
-          </div>
+        <form class="login-form" action="{{url_for('check_user')}}" method="post">
           <div>
           <input type="email" name="email" required placeholder="Email"/>
           </div>
-          <div>          
+          <div>
           <input type="password"  name="password" required placeholder="password"/>
           </div>
-          <button type ="submit">Crear cuenta</button>          
+          <button type ="submit">Ingresar</button>
+          <p class="message">¿No estas registrado? <a href='register.html'>Registrate</a></p>
         </form>
       </div>
     </div>

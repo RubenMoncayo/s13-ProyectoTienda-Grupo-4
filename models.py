@@ -10,7 +10,7 @@ class Product(db.Model):
     brand = db.Column(db.String)
     presentation = db.Column(db.String)
     category = db.Column(db.String)
-    price = db.Column(db.Double)
+    price = db.Column(db.Integer)
     amount = db.Column(db.Integer)
     due_date = db.Column(db.Date, nullable=True)
     income_type = db.Column(db.String)
@@ -73,8 +73,8 @@ class Invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.Date)
     amount = db.Column(db.Integer)
-    unit_value = db.Column(db.Double)
-    total_value = db.Column(db.Double)
+    unit_value = db.Column(db.Integer)
+    total_value = db.Column(db.Integer)
 
     # constructor tabla Factura de Venta
 
@@ -92,7 +92,7 @@ class Egress_invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date = db.Column(db.Date)    
     egress_type = db.Column(db.String)
-    total_value = db.Column(db.Double)
+    total_value = db.Column(db.Integer)
 
     # constructor tabla Comprobante de Egreso
 
@@ -186,7 +186,7 @@ class Reports(db.Model):
     date = db.Column(db.Date)    
     report_type = db.Column(db.String)
     invoice_id = db.Column(db.ForeignKey("Invoice.id"), nullable=True)   
-    contable_balance = db.Column(db.Double)
+    contable_balance = db.Column(db.Integer)
     inventory_balance = db.Column(db.Integer)
 
     # constructor tabla Reportes

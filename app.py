@@ -9,8 +9,8 @@ app = Flask(__name__)
 
 # 'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost:5432/tienda'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oqeyqjxvtgabsw:b725feeade390b604b07cc18aa8aee5156bd63e64a25b9d2f14f4ae82f30fd13@ec2-54-161-189-150.compute-1.amazonaws.com:5432/dfacl5b6rvkdn5'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:root@localhost:5432/tienda'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://oqeyqjxvtgabsw:b725feeade390b604b07cc18aa8aee5156bd63e64a25b9d2f14f4ae82f30fd13@ec2-54-161-189-150.compute-1.amazonaws.com:5432/dfacl5b6rvkdn5'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'some-secret-key'
 

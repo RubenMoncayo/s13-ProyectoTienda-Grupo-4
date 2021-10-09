@@ -1,3 +1,4 @@
+from html.entities import name2codepoint
 from re import U
 from flask import Flask, request, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -17,7 +18,7 @@ db = SQLAlchemy(app)
 
 # Importar los modelos
 
-from models import Product, User, Invoice, Administrator
+from models import Product, Administrator, Cashier, Invoice, Egress_invoice, User, Inventory, Incomes, Egress, Reports 
 
 # Crear esquema de la base de datos
 
@@ -28,13 +29,13 @@ db.session.commit()
 
 @app.route("/")
 def get_home():
-    return "Este es el home"
+    return render_template("index.html")
 
 # Ruta para crear el usuario
 
-@app.route("/register")
+@app.route("/registro")
 def register():
-    return render_template("register.html")
+    return render_template("registro.html")
 
 @app.route("/create_user", methods=["POST"])
 def create_user():
@@ -42,7 +43,7 @@ def create_user():
     email = request.form["email"]
     password = request.form["password"] 
 
-    user = User(email, password)
+    user = User(name, email, password)
     db.session.add(user)
     db.session.commit()   
 
@@ -50,37 +51,30 @@ def create_user():
 
 # Ruta de logueo de usuario
 
-@app.route('/login')
+@app.route('/ingreso')
 def login():
-  return render_template("login.html")
-
+  return render_template("ingreso.html")
 
 @app.route('/check_user', methods=['POST'])
 def check_user():
     email = request.form["email"]
     password = request.form["password"]
-    users = User.query.filter(User.password==password,User.email==email)
-
+    user = User.query.filter(User.password==password,User.email==email)
+    
     try:
-        if(users[0] is not None):
-            return render_template("register.html")
+        if(user[0] is not None):
+            return redirect(url_for("crud_product"))            
 
     except:
-        return redirect(url_for("product"))       
-
-
-    # Insertar en DB
-    # Buscar código en la DB
-    # Si no existe el código, crearlo en la DB
-    # Si existe el código, redireccionar a la página de register
-
-
-# Rutas de otras acciones
+        return redirect("/registro")     
+ 
+# Rutas para productos
 
 @app.route("/product", methods=["GET", "POST"])
 def crud_product():
     if request.method == "GET":
-
+        return render_template("registro_pro.html")
+        '''
     # Pedir un producto
     
         print("Llegó un GET")
@@ -103,7 +97,7 @@ def crud_product():
         db.session.commit()
         
         return "Esto fue un GET"
-
+        '''
     elif request.method == "POST":
 
     # Registrar un producto
@@ -114,45 +108,103 @@ def crud_product():
         presentation = request_data["presentation"]
         category = request_data["category"]
         price = request_data["price"]
+        amount = request_data["amount"]
+        due_date = request_data["due_date"]
+        income_type = request_data["income_type"]
+        supplier = request_data["supplier"]
+        location = request_data["location"]
+
+        product = Product(name, brand, presentation, category, price, amount, due_date, income_type, supplier, location)
+        db.session.add(product)
+        db.session.commit()
 
         print("Nombre:" + name)
         print("Marca:" + brand)
         print("Presentación:" + presentation)
         print("Categoria:" + category)
         print("Precio:" + price)
+        print("Cantidad:" + amount)
+        print("Fecha de Vencimiento:" + due_date)
+        print("Tipo de Ingreso:" + income_type)
+        print("Proveedor:" + supplier)
+        print("Ubicación:" + location)       
+           
+        return redirect("/product")
 
-    # Insertar en la base de datos el producto
+# Ruta para actualizar productos
 
-        return "Se registró el producto exitosamente"
+@app.route('/doupdateproduct', methods=['POST'])
+def doupdateproduct():
+    if request.method == "POST":
+        request_data = request.form
+        print(request_data)
+        id = request_data['id']
+        name = request_data["name"]
+        brand = request_data["brand"]
+        presentation = request_data["presentation"]
+        category = request_data["category"]
+        price = request_data["price"]
+        amount = request_data["amount"]
+        due_date = request_data["due_date"]
+        income_type = request_data["income_type"]
+        supplier = request_data["supplier"]
+        location = request_data["location"]
 
-# Actualizar productos
+        product = Product.query.get(int(id))
+        product.name = name
+        product.brand = brand
+        product.presentation = presentation
+        product.category = category
+        product.price = price
+        product.amount = amount
+        product.due_date = due_date
+        product.income_type = income_type
+        product.supplier = supplier
+        product.location = location
+        
+        db.session.commit()        
 
-@app.route('/updateproduct')
+        return redirect("/updateproduct")
+
+@app.route('/updateproduct', methods=['GET','POST'])
 def update_product():
-    old_name = "Jabon de cuerpo"
-    new_name = "Jabon de loza"
-    old_product = Product.query.filter_by(name=old_name).first()
-    old_product.name = new_name
-    db.session.commit()
-    return "Actualización exitosa"
+    if request.method == "GET":
+        return render_template("form_actualizar_pro.html")
+    elif request.method =="POST":
+        
+        request_data = request.form
+        name = request_data["name"]
+        old_product = Product.query.filter_by(name=name).first()
+        return render_template("actualizacion_pro.html", old_product=old_product)
+     
+    return redirect("/doupdateproduct")
 
-# Consultar productos
+# Ruta para consultar productos
 
 @app.route('/getproduct')
 def get_product():
-    songs = Product.query.all()
-    print(Product[0].category)
-    return "Se trajo la lista de productos"
+    products = Product.query.all()
+    print(products)
+    return render_template("lista_producto.html", products=products)
 
-# Eliminar productos
+# Ruta para eliminar productos
 
-@app.route('/deleteproduct')
+@app.route('/deleteproduct', methods=["GET", "POST"])
 def delete_product():
-    product_name = "Jabon de cuerpo"
-    product = Product.query.filter_by(name=product_name).first()
-    db.session.delete(product)
-    db.session.commit()
-    return "Se eliminó el producto"
+
+    if request.method == "GET":
+        return render_template("eliminacion_pro.html")
+
+    elif request.method == "POST":    
+
+        request_data = request.form
+        name = request_data["name"]
+        
+        product = Product.query.filter_by(name=name).first()        
+        db.session.delete(product)
+        db.session.commit()
+
+        return redirect("/deleteproduct")
 
 
 if __name__ == "__main__":

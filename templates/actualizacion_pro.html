@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 	<meta charset="UTF-8">
-	<title>Tienda Virtual</title> 
+	<title>Actualizar Productos</title> 
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
  <script src="https://kit.fontawesome.com/7c640bf6f9.js" crossorigin="anonymous"></script>
@@ -79,12 +79,46 @@ p{
         border-radius: 3%;
     }
 
+    .menu{
+        background-color: #d0f4b9;
+        text-decoration: none;
+        padding: 1px 11px;
+        display: block;
+  list-style: none;
+  padding: 0;
+  width: 36%;
+  max-width: 1000px;
+  margin: right;
+}
+.menu li a{
+  text-decoration: none;
+  color: #1a2537;
+  padding: 10px;
+  display: block;
+}
+
+.menu li{
+  display: inline-block;
+  text-align: center; 
+}
+
+
 }
     </style>
 
 
 </head>  
 <body>
+
+    <ul class="menu">
+        
+        <li><a href="/deleteproduct">Eliminar producto</a></li>
+        <li>  -  </li>
+        <li><a href="/product">Registrar producto</a></li>   
+        <li> - </li>   
+        <li><a href="/getproduct">Tabla de productos</a></li>   
+      </ul>
+
  <form class="formulario" action="/doupdateproduct" method="POST" >
     
     <h1>Actualización de productos</h1>

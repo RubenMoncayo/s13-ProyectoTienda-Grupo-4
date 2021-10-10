@@ -73,31 +73,8 @@ def check_user():
 @app.route("/product", methods=["GET", "POST"])
 def crud_product():
     if request.method == "GET":
-        return render_template("registro_pro.html")
-        '''
-    # Pedir un producto
-    
-        print("Llegó un GET")
-
-    # Insertar producto
-
-        name = "Jabon de cuerpo"
-        brand = "Palmolive"
-        presentation = "barra"
-        category = "Aseo"
-        price = 2500
-        amount = 1
-        due_date = datetime.datetime(int(2001), int(9), int(24))
-        income_type = "proveedor"
-        supplier = "Makro"
-        location = "Estante 1"
-
-        entry = Product(name,brand,presentation,category,price,amount,due_date,income_type,supplier,location)
-        db.session.add(entry)
-        db.session.commit()
+        return render_template("registro_pro.html")        
         
-        return "Esto fue un GET"
-        '''
     elif request.method == "POST":
 
     # Registrar un producto

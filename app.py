@@ -113,8 +113,7 @@ def crud_product():
 @app.route('/doupdateproduct', methods=['POST'])
 def doupdateproduct():
     if request.method == "POST":
-        request_data = request.form
-        print(request_data)
+        request_data = request.form        
         id = request_data['id']
         name = request_data["name"]
         brand = request_data["brand"]
@@ -147,8 +146,8 @@ def doupdateproduct():
 def update_product():
     if request.method == "GET":
         return render_template("form_actualizar_pro.html")
-    elif request.method =="POST":
-        
+
+    elif request.method =="POST":        
         request_data = request.form
         name = request_data["name"]
         old_product = Product.query.filter_by(name=name).first()

@@ -104,7 +104,7 @@ class Egress_invoice(db.Model):
 # Tabla Usuarios
 
 class User(db.Model):
-    __tablename__ = 'Users'
+    __tablename__ = 'User'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String)

@@ -63,7 +63,7 @@ def check_user():
     
     try:
         if(user[0] is not None):
-            return redirect(url_for("crud_product"))            
+            return redirect("/product")          
 
     except:
         return redirect("/registro")     

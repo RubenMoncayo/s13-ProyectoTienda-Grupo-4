@@ -6,6 +6,8 @@ import datetime
 
 
 app = Flask(__name__)
+PORT=5000
+DEBUG=False
 
 # 'postgresql://<usuario>:<contraseña>@<direccion de la db>:<puerto>/<nombre de la db>
 
@@ -45,9 +47,9 @@ def create_user():
 
     user = User(name, email, password)
     db.session.add(user)
-    db.session.commit()   
+    db.session.commit()       
 
-    return redirect(url_for("login")) 
+    return redirect("/check_user")
 
 # Ruta de logueo de usuario
 
@@ -62,8 +64,8 @@ def check_user():
     user = User.query.filter(User.password==password,User.email==email)
     
     try:
-        if(user[0] is not None):
-            return redirect(url_for("crud_product"))            
+        if(user is not None):
+            return redirect("/product")            
 
     except:
         return redirect("/registro")     
@@ -184,5 +186,5 @@ def delete_product():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=PORT, debug=DEBUG)
 
